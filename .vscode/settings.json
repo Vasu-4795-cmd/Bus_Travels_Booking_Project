@@ -1,0 +1,7 @@
+{
+  "python.defaultInterpreterPath": "C:\\Users\\sanka\\OneDrive\\Desktop\\DB\\Django\\aenv\\Scripts\\python.exe",
+  "python.analysis.extraPaths": [
+    "./Django/aenv/Lib/site-packages"
+  ],
+  "github.copilot.nextEditSuggestions.enabled": true
+}

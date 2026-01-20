@@ -1,0 +1,143 @@
+/* ===== REALISTIC SPACE BACKGROUND ===== */
+.space-bg {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+/* Base star layer */
+.space-bg::before,
+.space-bg::after {
+  content: "";
+  position: absolute;
+  inset: -200%;
+  background-repeat: repeat;
+  animation: starDrift 60s linear infinite;
+}
+
+/* Small dense stars */
+.space-bg::before {
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, #fff, transparent),
+    radial-gradient(1px 1px at 30% 80%, #fff, transparent),
+    radial-gradient(1px 1px at 50% 50%, #fff, transparent),
+    radial-gradient(1px 1px at 70% 10%, #fff, transparent),
+    radial-gradient(1px 1px at 90% 60%, #fff, transparent),
+    radial-gradient(1px 1px at 15% 70%, #fff, transparent),
+    radial-gradient(1px 1px at 40% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 65% 85%, #fff, transparent),
+    radial-gradient(1px 1px at 85% 25%, #fff, transparent);
+  background-size: 200px 200px;
+  animation:
+    starDrift 60s linear infinite,
+    twinkleSmall 3s ease-in-out infinite alternate;
+  opacity: 0.9;
+}
+
+/* Bright stars with glow */
+.space-bg::after {
+  background-image:
+    radial-gradient(2px 2px at 20% 40%, #ffffff, transparent 60%),
+    radial-gradient(2.5px 2.5px at 60% 70%, #cfe9ff, transparent 60%),
+    radial-gradient(3px 3px at 80% 20%, #ffffff, transparent 60%),
+    radial-gradient(2px 2px at 35% 90%, #ffd9a0, transparent 60%),
+    radial-gradient(3px 3px at 10% 10%, #cfe9ff, transparent 60%);
+  background-size: 450px 450px;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
+  animation:
+    starDrift 90s linear infinite,
+    twinkleBig 6s ease-in-out infinite alternate;
+  opacity: 1;
+}
+
+/* Slow movement like space */
+@keyframes starDrift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(1200px);
+  }
+}
+
+
+/* ✨ TWINKLING ANIMATIONS */
+@keyframes twinkleSmall {
+  0%   { opacity: 0.6; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.75; }
+}
+
+@keyframes twinkleBig {
+  0%   { opacity: 0.85; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.9; }
+}
+
+/* ===== GLASS CARD ===== */
+.space-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.8),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+
+#loginblock {
+    background-color: rgb(79, 76, 76);
+    color: white;
+    outline-color: white;
+}
+
+#uname {
+    background-color: transparent;
+    color: white;
+}
+
+#regblock {
+    background-color: rgb(79, 76, 76);
+    color: white;
+    outline-color: white;
+}
+
+#bus {
+  background-color: gray;
+}
+
+#seat {
+  background-color: rgb(210, 186, 186);
+}
+
+#clrbtn:hover {
+        background-color: darkgray;
+    }
+
+#loginblock img {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff3f6c; /* Myntra pink style */
+    margin-bottom: 20px;
+    display: block;
+    margin: 0 auto 20px;
+    width: 400px;
+    height: 160px;
+}
+
+#regblock img {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff3f6c; /* Myntra pink style */
+    margin-bottom: 20px;
+    display: block;
+    margin: 0 auto 20px;
+    width: 400px;
+    height: 160px;
+}
+
