@@ -278,61 +278,113 @@ const BusSeats = ({ userId }) => {
         </div>
 
         {/* Seat Layout */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <div className="grid grid-cols-4 md:grid-cols-8 gap-4 mb-8">
-          {(seats || []).map((seat, idx) => {
-            const seatId = seat?.id ?? seat?.pk ?? idx
-            const isBooked = Boolean(seat?.is_booked)
-            const isSelected = selectedSeat === seatId
-            const seatNumber = seat?.seat_number ?? seatId
-            const btnClass = isBooked
-              ? 'bg-red-500 text-white cursor-not-allowed'
-              : isSelected
-              ? 'bg-amber-500 text-white'
-              : 'bg-emerald-500 text-white hover:bg-emerald-600'
+        <div className="bg-white rounded-xl shadow-lg p-6">
+          <div className="flex justify-center">
+            <div className="flex flex-col gap-4">
+              {(() => {
+                const rows = []
+                for (let i = 0; i < (seats || []).length; i += 5) {
+                  rows.push((seats || []).slice(i, i + 5))
+                }
 
-            return (
-              <button
-                key={seatId}
-                onClick={() => !isBooked && handleBook(seatId)}
-                disabled={isBooked || bookingLoading}
-                className={`p-4 rounded-lg font-bold ${btnClass}`}
-              >
-                {seatNumber}
-              </button>
-            )
-          })}
-        </div>
+                return rows.map((row, rowIndex) => (
+                  <div key={rowIndex} className="flex justify-center gap-4">
+                    {/* Left side (2 seats) */}
+                    <div className="flex gap-4">
+                      {row.slice(0, 2).map((seat, idx) => {
+                        const seatId = seat?.id ?? seat?.pk ?? rowIndex * 5 + idx
+                        const isBooked = Boolean(seat?.is_booked)
+                        const isSelected = selectedSeat === seatId
+                        const seatNumber = seat?.seat_number ?? seatId
 
-        {seatError && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
-            {seatError}
+                        const btnClass = isBooked
+                          ? 'bg-red-500 text-white cursor-not-allowed'
+                          : isSelected
+                          ? 'bg-amber-500 text-white'
+                          : 'bg-emerald-500 text-white hover:bg-emerald-600'
+
+                        return (
+                          <button
+                            key={seatId}
+                            onClick={() => !isBooked && handleBook(seatId)}
+                            disabled={isBooked || bookingLoading}
+                            className={`w-14 h-14 flex items-center justify-center rounded-lg font-bold ${btnClass}`}
+                          >
+                            {seatNumber}
+                          </button>
+                        )
+                      })}
+                    </div>
+
+                    {/* Aisle Space */}
+                    <div className="w-16"></div>
+
+                    {/* Right side (3 seats) */}
+                    <div className="flex gap-4">
+                      {row.slice(2).map((seat, idx) => {
+                        const seatId = seat?.id ?? seat?.pk ?? rowIndex * 5 + idx + 2
+                        const isBooked = Boolean(seat?.is_booked)
+                        const isSelected = selectedSeat === seatId
+                        const seatNumber = seat?.seat_number ?? seatId
+
+                        const btnClass = isBooked
+                          ? 'bg-red-500 text-white cursor-not-allowed'
+                          : isSelected
+                          ? 'bg-amber-500 text-white'
+                          : 'bg-emerald-500 text-white hover:bg-emerald-600'
+
+                        return (
+                          <button
+                            key={seatId}
+                            onClick={() => !isBooked && handleBook(seatId)}
+                            disabled={isBooked || bookingLoading}
+                            className={`w-14 h-14 flex items-center justify-center rounded-lg font-bold ${btnClass}`}
+                          >
+                            {seatNumber}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))
+              })()}
+            </div>
           </div>
-        )}
-        <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          <p className="text-sm font-semibold text-blue-900 mb-2">Voice Transcription:</p>
-          <p className="text-gray-700">{isListening ? 'Listening...' : 'Click "Voice Book" button to start speaking'}</p>
-        </div>
-        <div className="text-center">
-          {!userId ? (
-            <button
-              onClick={() => navigate('/login')}
-              className="px-8 py-3 bg-indigo-600 text-white rounded-lg"
-            >
-              Login to Book Seats
-            </button>
-          ) : availableSeats === 0 ? (
-            <p className="text-red-600 font-semibold">
-              All seats are booked
-            </p>
-          ) : (
-            <p className="text-gray-600">
-              Capacity: {bus.capacity} | Passengers: {bus.passengers} |
-              Occupancy: {bus.occupancy_rate}%
-            </p>
+
+          {seatError && (
+            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+              {seatError}
+            </div>
           )}
+
+          <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-sm font-semibold text-blue-900 mb-2">
+              Voice Transcription:
+            </p>
+            <p className="text-gray-700">
+              {isListening ? 'Listening...' : 'Click "Voice Book" button to start speaking'}
+            </p>
+          </div>
+
+          <div className="text-center">
+            {!userId ? (
+              <button
+                onClick={() => navigate('/login')}
+                className="px-8 py-3 bg-indigo-600 text-white rounded-lg"
+              >
+                Login to Book Seats
+              </button>
+            ) : availableSeats === 0 ? (
+              <p className="text-red-600 font-semibold">All seats are booked</p>
+            ) : (
+              <p className="text-gray-600">
+                Capacity: {bus.capacity} | Passengers: {bus.passengers} |
+                Occupancy: {bus.occupancy_rate}%
+              </p>
+            )}
+          </div>
         </div>
-      </div>
+
 
       <button
         onClick={() => navigate('/my-bookings')}
